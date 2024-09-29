@@ -47,6 +47,8 @@ resource "aws_s3_bucket_policy" "get_object_policy" {
       }
     ]
   })
+
+   depends_on = [aws_s3_bucket_public_access_block.static_site_pa_block]
 }
 
 resource "aws_s3_object" "files" {
