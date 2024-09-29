@@ -12,3 +12,8 @@ variable blog_domain {
   type        = string
   description = "Domain for the blog"
 }
+
+variable terraform_backend_bucket {
+  type        = string
+  description = "Bucket to store the terraform state"
+}
