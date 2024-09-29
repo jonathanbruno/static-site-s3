@@ -52,12 +52,12 @@ resource "aws_s3_bucket_website_configuration" "static_site_website_configuratio
 #  })
 #}
 
-resource "aws_s3_object" "files" {
-  for_each = local.file_list
-  
-  bucket = aws_s3_bucket.static_site_bucket.bucket
-  key    = each.key
-  source = each.value.source
-  content_type = each.value.content_type
-}
+#resource "aws_s3_object" "files" {
+#  for_each = local.file_list
+#  
+#  bucket = aws_s3_bucket.static_site_bucket.bucket
+#  key    = each.key
+#  source = each.value.source
+#  content_type = each.value.content_type
+#}
 
