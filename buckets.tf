@@ -31,26 +31,25 @@ resource "aws_s3_bucket_website_configuration" "static_site_website_configuratio
   }
 }
 
-# Definir a política do bucket S3
-#resource "aws_s3_bucket_policy" "add_object_policy" {
-#  bucket = aws_s3_bucket.static_site_bucket.id
-#  depends_on = [
-#    aws_s3_bucket_public_access_block.static_site_pa_block,
-#    aws_s3_bucket_website_configuration.static_site_website_configuration
-#  ]
-#
-#  policy = jsonencode({
-#    Version = "2012-10-17"
-#    Statement = [
-#      {
-#        Action = "s3:GetObject"
-#        Effect = "Allow"
-#        Resource = "${aws_s3_bucket.static_site_bucket.arn}/*"
-#        Principal = "*"
-#      }
-#    ]
-#  })
-#}
+resource "aws_s3_bucket_policy" "add_object_policy" {
+  bucket = aws_s3_bucket.static_site_bucket.id
+  depends_on = [
+    aws_s3_bucket_public_access_block.static_site_pa_block,
+    aws_s3_bucket_website_configuration.static_site_website_configuration
+  ]
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "s3:GetObject"
+        Effect = "Allow"
+        Resource = "${aws_s3_bucket.static_site_bucket.arn}/*"
+        Principal = "*"
+      }
+    ]
+  })
+}
 
 #resource "aws_s3_object" "files" {
 #  for_each = local.file_list
