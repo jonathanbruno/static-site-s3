@@ -10,16 +10,6 @@ resource "aws_s3_bucket" "static_site_bucket" {
   force_destroy = true
 }
 
-resource "aws_s3_object" "files" {
-  for_each = local.file_list
-  
-  bucket = aws_s3_bucket.static_site_bucket.bucket
-  key    = each.key
-  source = each.value.source
-  content_type = each.value.content_type
-}
-
-
 resource "aws_s3_bucket_public_access_block" "static_site_pa_block" {
   bucket = aws_s3_bucket.static_site_bucket.id
 
@@ -42,24 +32,29 @@ resource "aws_s3_bucket_website_configuration" "static_site_website_configuratio
   }
 }
 
-resource "aws_s3_bucket_policy" "allow_get_object_from_website_bucket" {
+# Definir a política do bucket S3
+resource "aws_s3_bucket_policy" "get_object_policy" {
   bucket = aws_s3_bucket.static_site_bucket.id
-  policy = data.aws_iam_policy_document.allow_get_object_from_website_bucket.json
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "s3:GetObject"
+        Effect = "Allow"
+        Resource = "${aws_s3_bucket.static_site_bucket.arn}/*"
+        Principal = "*"
+      }
+    ]
+  })
 }
 
-data "aws_iam_policy_document" "allow_get_object_from_website_bucket" {
-  statement {
-    principals {
-      type        = "AWS"
-      identifiers = ["*"]
-    }
-
-    actions = [
-      "s3:GetObject",
-    ]
-
-    resources = [
-      "${aws_s3_bucket.static_site_bucket.arn}/*",
-    ]
-  }
+resource "aws_s3_object" "files" {
+  for_each = local.file_list
+  
+  bucket = aws_s3_bucket.static_site_bucket.bucket
+  key    = each.key
+  source = each.value.source
+  content_type = each.value.content_type
 }
+
