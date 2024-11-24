@@ -51,12 +51,10 @@ resource "aws_s3_bucket_policy" "add_object_policy" {
   })
 }
 
-resource "aws_s3_object" "files" {
-  for_each = local.file_list
-  
-  bucket = aws_s3_bucket.static_site_bucket.bucket
-  key    = each.key
-  source = each.value.source
-  content_type = each.value.content_type
-}
-
+#resource "null_resource" "upload_build" {
+#  provisioner "local-exec" {
+#    command = "aws s3 sync ./build s3://jb-terraform-bucket-static-site --acl public-read --profile ci"
+#  }
+#
+#  depends_on = [aws_s3_bucket.static_site]
+#}

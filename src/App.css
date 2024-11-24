@@ -1,0 +1,101 @@
+.App {
+  text-align: center;
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.selectable {
+  cursor: pointer;
+  margin: 5px 5px;
+}
+
+li.selectable {
+  list-style-type: none;
+}
+
+.selectable-selected {
+  background-color: #097028;
+  color: white;
+}
+
+.selectable-favorite {
+  background-color: #701009;
+  color: white;
+}
+
+.selectable:hover {
+  background-color: #e49292;
+  color: white;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    "favorite favorite favorite favorite"
+    "menu main main right";
+  gap: 10px;
+  padding: 7px;
+}
+
+.grid-item-menu {
+  grid-area: menu;
+  background-color: #bde9a4;
+  padding-left: 20px;
+}
+.grid-item-main {
+  grid-area: main;
+  background-color: #bbbbbb91;
+  padding :15px
+
+}
+.grid-item-right {
+  grid-area: right;
+  background-color: #8898f0d3;
+  padding :5px
+}
+
+.grid-item-favorite {
+  grid-area: favorite;
+  background-color: #eef0dfd3;
+  padding :5px
+}
+
+.field {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  font-size: 1em;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.detail-button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
